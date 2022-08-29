@@ -1,0 +1,16 @@
+# Example of a target config for one Zabbix target
+targets:
+  zabbix:
+    # the URL to your Zabbix frontend API, including "api_jsonrpc.php"
+    url: http://zabbix.loc/api_jsonrpc.php
+    # optional - path to a CA PEM file that was used to sign the Zabbix frontend's certificate
+    # caPath: "/path/to/zabbix/ca.pem"
+    # optional - set this to true to ignore certificate errors on the Zabbix frontend entirely
+    # skipVerify: true
+    tokens:
+      # List of tokens assigned to this Zabbix server. API clients must include one of these
+      # in the HTTP header as "Authorization: Bearer ...".
+      # Each token can be any string, e.g. hex strings, base64 or just some text.
+      - 0D6640E54634758727B0DD4C9D9F6009
+      - EjNcAhScADha1pbkNYyzVg==
+      - mytoken

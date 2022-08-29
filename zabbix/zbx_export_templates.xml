@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2022-09-26T14:45:16Z</date>
+    <groups>
+        <group>
+            <name>IntelliMon</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>IntelliMon API Guard Metrics</template>
+            <name>IntelliMon API Guard Metrics</name>
+            <description>Template to monitor IntelliMon API Guard v1.x metrics.&#13;
+&#13;
+IntelliTrend GmbH, 2022</description>
+            <groups>
+                <group>
+                    <name>IntelliMon</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <name>Allowed requests per minute</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_allowed_per_minute</key>
+                    <delay>0</delay>
+                    <description>Number of allowed HTTP requests per minute.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_allowed
+</params>
+                        </step>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Allowed requests total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_allowed_total</key>
+                    <delay>0</delay>
+                    <description>Total number of allowed HTTP requests.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_allowed
+</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Denied requests per minute</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_denied_per_minute</key>
+                    <delay>0</delay>
+                    <description>Number of denied HTTP requests per minute.&#13;
+&#13;
+Possible reasons for a denied request:&#13;
+&#13;
+* Missing or wrong auth header&#13;
+* Wrong token&#13;
+* Wrong request method</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_denied
+</params>
+                        </step>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Denied requests total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_denied_total</key>
+                    <delay>0</delay>
+                    <description>Total number of denied HTTP requests.&#13;
+&#13;
+Possible reasons for a denied request:&#13;
+&#13;
+* Missing or wrong auth header&#13;
+* Wrong token&#13;
+* Wrong request method</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_denied
+</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Requests per minute</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_per_minute</key>
+                    <delay>0</delay>
+                    <description>Number of HTTP requests per minute.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_total
+</params>
+                        </step>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Requests total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_requests_total</key>
+                    <delay>0</delay>
+                    <description>Total number of HTTP requests.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_requests_total
+</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Average size per request (last 5 min)</name>
+                    <type>CALCULATED</type>
+                    <key>apiguard.http_request_size_avg</key>
+                    <delay>5m</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>b</units>
+                    <params>sum(apiguard.http_request_size_per_minute,5m) / (sum(apiguard.http_requests_per_minute,5m)+1E-15)</params>
+                    <description>Average size of the body of requests over the last 5 minutes.</description>
+                </item>
+                <item>
+                    <name>Request size per minute</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_request_size_per_minute</key>
+                    <delay>0</delay>
+                    <units>b</units>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_request_size_total
+</params>
+                        </step>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Request size total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_request_size_total</key>
+                    <delay>0</delay>
+                    <units>b</units>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_request_size_total
+</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Average time per request (last 5 min)</name>
+                    <type>CALCULATED</type>
+                    <key>apiguard.http_request_time_avg</key>
+                    <delay>5m</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <params>sum(apiguard.http_request_time_per_minute,5m) / (sum(apiguard.http_requests_per_minute,5m)+1E-15)</params>
+                    <description>Average time to process a request over the last 5 minutes.</description>
+                </item>
+                <item>
+                    <name>Request processing time per minute</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_request_time_per_minute</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_request_time_total
+</params>
+                        </step>
+                        <step>
+                            <type>SIMPLE_CHANGE</type>
+                            <params/>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Request processing time total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.http_request_time_total</key>
+                    <delay>0</delay>
+                    <units>s</units>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_http_request_time_total
+</params>
+                        </step>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Metrics</name>
+                    <type>HTTP_AGENT</type>
+                    <key>apiguard.metrics</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <url>{$METRIC_API_URL}</url>
+                    <headers>
+                        <header>
+                            <name>Authorization</name>
+                            <value>Bearer {$METRIC_API_TOKEN}</value>
+                        </header>
+                    </headers>
+                </item>
+                <item>
+                    <name>Target tokens active</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.tokens_active</key>
+                    <delay>0</delay>
+                    <description>Tokens that have been used at least once in the last 5 minutes.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_tokens_active
+</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+                <item>
+                    <name>Target tokens total</name>
+                    <type>DEPENDENT</type>
+                    <key>apiguard.tokens_total</key>
+                    <delay>0</delay>
+                    <description>Total number of registered tokens in the target config.</description>
+                    <preprocessing>
+                        <step>
+                            <type>PROMETHEUS_PATTERN</type>
+                            <params>apiguard_tokens_total
+</params>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <params>1h</params>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>apiguard.metrics</key>
+                    </master_item>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$METRIC_API_TOKEN}</macro>
+                    <description>API guard metrics token as defined in the target config</description>
+                </macro>
+                <macro>
+                    <macro>{$METRIC_API_URL}</macro>
+                    <value>https://{HOST.CONN}/metrics</value>
+                    <description>URL to the API guard metrics URL, typically ends with &quot;/metrics</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>Requests</name>
+            <graph_items>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>IntelliMon API Guard Metrics</host>
+                        <key>apiguard.http_requests_denied_total</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>IntelliMon API Guard Metrics</host>
+                        <key>apiguard.http_requests_allowed_total</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Tokens</name>
+            <graph_items>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>IntelliMon API Guard Metrics</host>
+                        <key>apiguard.tokens_active</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>IntelliMon API Guard Metrics</host>
+                        <key>apiguard.tokens_total</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>

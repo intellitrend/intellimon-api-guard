@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  intellimon-api-guard:
+    image: local/intellimon-api-guard
+    build:
+      context: build
+    environment:
+      INTMON_API_GUARD_TARGET_PATH: /targets.yaml
+      INTMON_API_GUARD_LISTEN: ":8080"
+    volumes:
+      - "./data/targets.yml:/targets.yml"
+    ports:
+      - 8080:8080/tcp
